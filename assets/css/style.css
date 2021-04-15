@@ -1,0 +1,41 @@
+#header-background {
+    background-image: linear-gradient(to right, blue,black)
+}
+
+.crdWeekly {
+    width: 175px;
+    min-height: 150px;
+  }
+  
+  .crdDetails {
+    width: 18rem;
+    min-height: 130px;
+  }
+  
+  .crdCurrent {
+    width: 100%;
+    min-height: 30rem;
+  }
+  
+  #currentIcon {
+    height: 200px;
+    width: 200px;
+  }
+  
+  .p-lg {
+    font-size: 2rem;
+    font-weight: bolder;
+  }
+  
+  .uviGood {
+    color: #29ce00;
+  }
+  .uviBad {
+    color: #ff0000;
+  }
+  .uviModerate {
+    color: #ffa42d;
+  }
+  .uviExtreme {
+    color: #b700ff;
+  }
