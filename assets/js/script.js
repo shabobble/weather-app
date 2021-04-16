@@ -3,85 +3,68 @@ let longitude;
 let inputCity;
 let selectCity;
 let searchCity;
-let okToProceed;
-let cityWeatherList = [];
-let searchInput = $("#searchInput").val();
+let cityList = [];
+let searchInput = $("#searchInput")
 
 searchButton.addEventListener("click", checkCityEntry)
-//     okToProceed = checkCityEntry()
-//     if (okToProceed) {
-//         okToProceed = getLongLat()
-//     }
-
-//     if (okToProceed) {
-//         okToProceed = getWeather();
-//     }
-
-//     $("#selectCity").val('');
-//     saveTheCity();
-//     $("#selectCity").empty();
-//     $("#selectCity").append($('<option value="" disabled selected > Enter a location or select one from the list</option>'))
-//     loadCityWeatherList();
-// )
 
 function checkCityEntry() {
-    inputCity = $("#searchInput").val().replace(/\s/g, "");
+    inputCity = searchInput.val().replace(/\s/g, "");
 
     if (inputCity == "") {
         alert('Please enter a city to check the weather!')
-        okToProceed = false;
 
     } else {
         if (inputCity.includes(",")) {
             searchCity = inputCity.toUpperCase();
-            okToProceed = true;
-            getLongLat();
-            getWeather();
+            getCoordinates()
+                .then(() => getOneCall())
+                // .then(() => console.log('I finished loading weather data'))
+                .catch(() => alert('failed to load weather'))
+            storeCity();
 
         } else {
-            alert('If you are including a state in your search, please separate from city with a comma. Please try again.');
-            okToProceed = false;
+            alert('Please include a two-letter US State code.');
         }
     }
-
-    return okToProceed
 };
 
-function getLongLat() {
-    
+function getCoordinates() {
     let weatherUrl = `https://api.openweathermap.org/data/2.5/weather?q=${searchCity},USA&Appid=8444a31943683d63f7214cd990794761&units=imperial`;
-    fetch(weatherUrl)
+    return fetch(weatherUrl)
         .then(function (response1) {
             if (response1.ok) {
-                response1.json().then(function (data) {
-                    latitude = data.coord.lat;
-                    longitude = data.coord.lon;
-                    console.log(latitude)
-                    console.log(longitude)
-                    okToProceed = true
-                })
+                return response1.json()
             } else {
                 console.log(response1);
-                okToProceed = false
+                throw new Error('Failed to get coordinates')
             }
         })
-
-        return okToProceed;
-        
+        .then((data) => {
+            latitude = data.coord.lat;
+            longitude = data.coord.lon;
+            console.log(latitude)
+            console.log(longitude)
+            return {
+                latitude: data.coord.lat,
+                longitude: data.coord.long
+            }
+        })
 }
 
-function getWeather() {
+function getOneCall(input) {
+    // let { latitude, longitude } = input;
     let oneCallUrl = "https://api.openweathermap.org/data/2.5/onecall?lat=" + latitude + "&lon=" + longitude + "&Appid=8444a31943683d63f7214cd990794761&units=imperial";
-    fetch(oneCallUrl)
+    return fetch(oneCallUrl)
         .then(function (response) {
             if (response.ok) {
-                response.json().then(function (data) {
+                return response.json().then(function (data) {
                     for (let i = 1; i < 6; i++) {
-                        let dayTitleCard = $("#day[i]Title");
+                        let dayTitleCard = $(`#day${i}Title`);
                         dayTitleCard.text(dayjs.unix(data.daily[i].dt).format('ddd    MM/DD'));
-                        let dayIconCard = $("#day[i]Icon");
+                        let dayIconCard = $(`#day${i}Icon`);
                         dayIconCard.attr("src", "http://openweathermap.org/img/wn/" + data.daily[i].weather[0].icon + ".png");
-                        let dayDescCard = $("#day[i]Desc");
+                        let dayDescCard = $(`#day${i}Desc`);
                         dayDescCard.html(`Lo: ${parseInt(data.daily[i].temp.min)}\xB0 F</br>Hi: ${parseInt(data.daily[i].temp.max)}\xB0 F</br>Humid: ${data.daily[i].humidity} %</br>Wind: ${data.daily[i].wind_speed} MPH `);
                     }
 
@@ -109,50 +92,43 @@ function getWeather() {
                         $("#currentUvi").addClass("uviExtreme")
                     }
                 })
-                okToProceed = true;
             } else {
                 console.log(response);
-                okToProceed = false;
             }
         })
-        return okToProceed
 };
 
-function saveTheCity() {
-    let matchFound = false
-    cityWeatherList = JSON.parse(localStorage.getItem("cityWeatherList"));
-    if (!cityWeatherList) {
-        localStorage.setItem("cityWeatherList", JSON.stringify(""));
-        cityWeatherList = []
-    }
-
-    if (cityWeatherList) {
-        for (let i = 0; i <= cityWeatherList.length; i++) {
-            if (cityWeatherList[i] == searchCity) {
-                matchFound = true;
-                break;
-            }
-        }
-        if (!matchFound) {
-            cityWeatherList.push(searchCity)
-            localStorage.setItem("cityWeatherList", JSON.stringify(cityWeatherList));
+function storeCity() {
+    
+    if (!cityList.includes(searchCity)) {
+            cityList.push(searchCity)
+            localStorage.setItem("cityList", JSON.stringify(cityList));
+            loadcityList();
 
         }
     }
-}
 
-function loadCityWeatherList() {
-    cityWeatherList = JSON.parse(localStorage.getItem("cityWeatherList"));
-    if (cityWeatherList) {
-        for (let i = 0; i <= cityWeatherList.length; i++) {
-            $("#selectCity").append($('<option>', {
-                value: cityWeatherList[i],
-                text: cityWeatherList[i]
-            }));
+
+function loadcityList() {
+    let listEl = $(".list-group").empty();
+    cityList = JSON.parse(localStorage.getItem("cityList"));
+    if (cityList) {
+        for (let city of cityList) {
+                let btn = $("<button>", {
+                text: city
+            })
+
+            let li = $('<li>').append(btn)
+            listEl.append(li);
+            btn.on ('click', function() {
+                searchInput.val(city)
+                checkCityEntry();
+
+            })
         }
     }
 };
 
-loadCityWeatherList()
+loadcityList()
 
 
