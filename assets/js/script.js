@@ -70,6 +70,8 @@ function getOneCall(input) {
 
                     let weatherTitle = $("#weatherTitle");
                     weatherTitle.text(`5-Day Forecast: ${searchCity}`);
+                    let currentCity = $("#currentCity");
+                    currentCity.text(`Current Forecast: ${searchCity}`);
                     let curDateCard = $("#currentTitle");
                     curDateCard.text(dayjs.unix(data.current.dt).format('ddd, MMM DD, YYYY'));
                     let curIconCard = $("#currentIcon");
@@ -80,6 +82,10 @@ function getOneCall(input) {
                     curCondCard.text(`Conditions: ${data.current.weather[0].main}`);
                     let curUviCard = $("#currentUvi");
                     curUviCard.text(`UV Index: ${data.current.uvi}`);
+                    let curWindCard = $("#currentWind");
+                    curWindCard.text(`Wind Speed: ${data.current.wind_speed}`);
+                    let curHumidCard = $("#currentHumidity");
+                    curHumidCard.text(`Humidity: ${data.current.humidity}`)
 
                     if (parseInt(data.current.uvi) < 3) {
                         $("#currentUvi").addClass("uviGood")
