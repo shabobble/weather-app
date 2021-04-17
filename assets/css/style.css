@@ -2,6 +2,13 @@
     background-image: linear-gradient(to right, blue,black)
 }
 
+hr {
+    border: 1px solid black;
+}
+
+ul button {
+    margin: 5px
+}
 .crdWeekly {
     width: 175px;
     min-height: 150px;
@@ -28,14 +35,16 @@
   }
   
   .uviGood {
-    color: #29ce00;
+    color: #3ee913;
+  }
+
+  .uviModerate {
+    color: #dbe734;
   }
   .uviBad {
-    color: #ff0000;
-  }
-  .uviModerate {
-    color: #ffa42d;
-  }
+    color: #ca8319;
+    }
+
   .uviExtreme {
-    color: #b700ff;
+    color: #fc1008;
   }

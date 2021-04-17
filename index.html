@@ -17,43 +17,42 @@
                 </div>
             </div>
         </div>
-        
+    </header>
         <div class="container-fluid">
-            <div class="col-md-2">
-                <div class="form-group">
-                    <label for="searchInput">Search for a City:</label>
-                    <input type="search" class="form-control" id="searchInput">
-                    
+            <div class="row">
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label for="searchInput">Search for a City:</label>
+                        <input type="search" class="form-control" id="searchInput">
                     <div class="d-grid gap-2 my-3">
                         <button type="button" class="btn btn-primary" id="searchButton">Search</button>
                     </div>
-                </div>
+                    </div>
+                    <hr>
+                    <ul class="list-group"></ul>
             </div>
 
-            <ul class="list-group">
-                
-            </ul>
-
-            <div class="col mx-4 my-4">
-                <div class="card currentCard py-2">
-                    <h5 class="card-title mt-2 text-center">Current Forecast</h5>
-                    <div id="current" class="d-flex flex-row">
-                        <div class="card border-primary mb-3 mx-1 crdCurrent">
-                            <div class="card-body text-primary">
-                                <h2 id="currentTitle" class="card-title">Sun</h2>
-                                <img id="currentIcon" class="mx-auto" src="http://openweathermap.org/img/wn/10d@2x.png" alt="Weather Icon" />
-                                <p id="currentTemp" class="card-text p-lg">Temp:</p>
-                                <p id="currentDesc" class="card-text p-lg">Conditions:</p>
-                                <p id="currentUvi" class="card-text p-lg">UV Index:</p>
+            <div class="col-md-10">
+                <div class="mx-4 my-4">
+                    <div class="card currentCard py-2">
+                        <h5 class="card-title mt-2 text-center">Current Forecast</h5>
+                        <div id="current" class="d-flex flex-row">
+                            <div class="card border-primary mb-3 mx-1 crdCurrent">
+                                <div class="card-body text-primary">
+                                    <h2 id="currentTitle" class="card-title">Sun</h2>
+                                    <img id="currentIcon" class="mx-auto" src="http://openweathermap.org/img/wn/10d@2x.png" alt="Weather Icon" />
+                                    <p id="currentTemp" class="card-text p-lg">Temp:</p>
+                                    <p id="currentDesc" class="card-text p-lg">Conditions:</p>
+                                    <p id="currentUvi" class="card-text p-lg">UV Index:</p>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    
                 </div>
-            </div>
 
-            <div class="row">
-                <div class="col mt-4">
+                
+                <div class="mt-4">
+                    <div class="row"></div>
                     <div class="card pb-5 fiveDayCard pl-5">
                         <h5 class="card-title mt-2 mr-5" id="weatherTitle">5-Day Forecast</h5>
                         <div id="weekly" class="d-flex flex-row">

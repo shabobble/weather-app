@@ -19,7 +19,7 @@ function checkCityEntry() {
             searchCity = inputCity.toUpperCase();
             getCoordinates()
                 .then(() => getOneCall())
-                // .then(() => console.log('I finished loading weather data'))
+                
                 .catch(() => alert('failed to load weather'))
             storeCity();
 
@@ -100,12 +100,22 @@ function getOneCall(input) {
 
 function storeCity() {
     
+    let cityList = JSON.parse(localStorage.getItem("cityList")) || [];
+
+    if (cityList.length > 10) {
+        cityList.splice(0, 1);
+    }
+
+    
+
     if (!cityList.includes(searchCity)) {
             cityList.push(searchCity)
             localStorage.setItem("cityList", JSON.stringify(cityList));
             loadcityList();
 
         }
+        
+    
     }
 
 
