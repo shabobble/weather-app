@@ -45,6 +45,7 @@ My full-stack web development course is being offered as a collaboration between
 
 * Instructor - Benjamin Hutchins [GitHub](https://github.com/benhutchins)
 * TA - Casey Ferguson [LinkedIn](https://www.linkedin.com/in/casey-a-ferguson/)
+* Assistance by Paul Marceau [GitHub](https://github.com/pmarceaujr)
 
 ## License
 
